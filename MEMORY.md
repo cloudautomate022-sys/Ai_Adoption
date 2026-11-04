@@ -2,13 +2,15 @@
 
 ## Current state
 - **v1 complete and verified** (backend + frontend + admin + PDF + ES/EN/IT).
+- Git repo initialized (`main`) and pushed to
+  <https://github.com/cloudautomate022-sys/Ai_Adoption> (commit `bd7af0f`).
 - Backend: FastAPI on `:8000` (`/api/health` and `/health`), SQLite at
   `backend/data/ia_day0.db` (gitignored, fresh DB with 0 leads + seeded admin).
 - Frontend: Next.js 14.2.35 on `:3000`, production build passing.
 - Tests: 11 pytest tests pass (engine, PDF in 3 languages, auth).
 - E2E verified with Playwright: wizard → report → PDF, language switching, admin
   login/error, lead list/detail, admin PDF download.
-- Both dev servers stopped; no QA scripts, screenshots or test DBs left in the repo.
+- Local dev servers were started on demand; stop them when idle.
 
 ## Key decisions (and why)
 - **Deterministic rules engine** (no LLM): reproducible, auditable, works offline; LLM
