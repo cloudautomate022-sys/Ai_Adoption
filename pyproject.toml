@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "ia-day-0-backend"
+version = "4.0.0"
+description = "IA-Day-0 Assessment Engine V4 — FastAPI backend"
+authors = ["Cloud Automate <cloudautomate022@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.115.6"
+uvicorn = { version = "^0.34.0", extras = ["standard"] }
+SQLAlchemy = "^2.0.36"
+pydantic = { version = "^2.10.4", extras = ["email"] }
+reportlab = "^4.2.5"
+python-dotenv = "^1.0.1"
+
+[tool.poetry.group.dev.dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
