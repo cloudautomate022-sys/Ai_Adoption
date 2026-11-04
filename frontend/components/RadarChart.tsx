@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "@/lib/i18n";
+import { useTheme } from "@/lib/theme";
 import type { Scores } from "@/lib/types";
 
 const DIMS: { key: keyof Scores; label: string }[] = [
@@ -16,6 +17,25 @@ const CX = 170;
 const CY = 168;
 const R = 100;
 
+const PALETTE = {
+  dark: {
+    grid: "rgba(255,255,255,0.08)",
+    fill: "rgba(34,211,238,0.18)",
+    stroke: "#22D3EE",
+    dot: "#67E8F9",
+    label: "#94A3B8",
+    value: "#E2E8F0",
+  },
+  light: {
+    grid: "rgba(15,23,42,0.12)",
+    fill: "rgba(14,116,144,0.14)",
+    stroke: "#0E7490",
+    dot: "#0891B2",
+    label: "#475569",
+    value: "#0F172A",
+  },
+} as const;
+
 function point(index: number, radius: number): [number, number] {
   const angle = (Math.PI * 2 * index) / DIMS.length - Math.PI / 2;
   return [CX + Math.cos(angle) * radius, CY + Math.sin(angle) * radius];
@@ -23,6 +43,8 @@ function point(index: number, radius: number): [number, number] {
 
 export default function RadarChart({ scores }: { scores: Scores }) {
   const { t } = useI18n();
+  const { theme } = useTheme();
+  const colors = PALETTE[theme];
 
   const rings = [0.25, 0.5, 0.75, 1];
   const dataPoints = DIMS.map((dim, index) =>
@@ -38,7 +60,7 @@ export default function RadarChart({ scores }: { scores: Scores }) {
             key={ratio}
             points={DIMS.map((_, index) => point(index, R * ratio).join(",")).join(" ")}
             fill="none"
-            stroke="rgba(255,255,255,0.08)"
+            stroke={colors.grid}
             strokeWidth={1}
           />
         ))}
@@ -52,7 +74,7 @@ export default function RadarChart({ scores }: { scores: Scores }) {
               y1={CY}
               x2={x}
               y2={y}
-              stroke="rgba(255,255,255,0.08)"
+              stroke={colors.grid}
               strokeWidth={1}
             />
           );
@@ -60,13 +82,13 @@ export default function RadarChart({ scores }: { scores: Scores }) {
 
         <polygon
           points={polygon}
-          fill="rgba(34,211,238,0.18)"
-          stroke="#22D3EE"
+          fill={colors.fill}
+          stroke={colors.stroke}
           strokeWidth={2}
         />
 
         {dataPoints.map(([x, y], index) => (
-          <circle key={DIMS[index].key} cx={x} cy={y} r={3.5} fill="#67E8F9" />
+          <circle key={DIMS[index].key} cx={x} cy={y} r={3.5} fill={colors.dot} />
         ))}
 
         {DIMS.map((dim, index) => {
@@ -80,7 +102,7 @@ export default function RadarChart({ scores }: { scores: Scores }) {
                 y={y}
                 textAnchor={anchor}
                 fontSize={10}
-                fill="#94a3b8"
+                fill={colors.label}
               >
                 {t(dim.label)}
               </text>
@@ -90,7 +112,7 @@ export default function RadarChart({ scores }: { scores: Scores }) {
                 textAnchor={anchor}
                 fontSize={9.5}
                 fontWeight={700}
-                fill="#e2e8f0"
+                fill={colors.value}
               >
                 {scores[dim.key]}
               </text>

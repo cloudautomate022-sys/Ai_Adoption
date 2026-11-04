@@ -9,10 +9,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Theme-aware tokens (see app/globals.css). `ink` stays fixed: it is the
+        // dark text used on top of the cyan/indigo gradient buttons.
+        canvas: "rgb(var(--canvas-rgb) / <alpha-value>)",
+        surface: "rgb(var(--surface-rgb) / <alpha-value>)",
+        fg: "rgb(var(--fg-rgb) / <alpha-value>)",
+        muted: "rgb(var(--muted-rgb) / <alpha-value>)",
+        faint: "rgb(var(--faint-rgb) / <alpha-value>)",
+        line: "rgb(var(--line-rgb) / <alpha-value>)",
+        accent: "rgb(var(--accent-rgb) / <alpha-value>)",
+        accent2: "rgb(var(--accent2-rgb) / <alpha-value>)",
+        violet: "rgb(var(--violet-rgb) / <alpha-value>)",
+        success: "rgb(var(--success-rgb) / <alpha-value>)",
+        warning: "rgb(var(--warning-rgb) / <alpha-value>)",
+        danger: "rgb(var(--danger-rgb) / <alpha-value>)",
         ink: "#060A15",
-        surface: "#0B1224",
-        accent: "#22D3EE",
-        accent2: "#818CF8",
+        recessed: "var(--recessed)",
+        track: "var(--track)",
       },
       boxShadow: {
         glow: "0 0 60px -15px rgba(34, 211, 238, 0.35)",

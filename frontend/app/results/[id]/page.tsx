@@ -77,15 +77,15 @@ export default function ResultsPage() {
       <div className="container-page py-24">
         <div className="mx-auto max-w-3xl">
           <div className="card animate-pulse p-10">
-            <div className="h-4 w-40 rounded bg-white/10" />
-            <div className="mt-6 h-16 w-64 rounded bg-white/10" />
+            <div className="h-4 w-40 rounded bg-fg/10" />
+            <div className="mt-6 h-16 w-64 rounded bg-fg/10" />
             <div className="mt-8 space-y-3">
-              <div className="h-3 w-full rounded bg-white/5" />
-              <div className="h-3 w-5/6 rounded bg-white/5" />
-              <div className="h-3 w-4/6 rounded bg-white/5" />
+              <div className="h-3 w-full rounded bg-fg/5" />
+              <div className="h-3 w-5/6 rounded bg-fg/5" />
+              <div className="h-3 w-4/6 rounded bg-fg/5" />
             </div>
           </div>
-          <p className="mt-4 text-center text-sm text-slate-400">
+          <p className="mt-4 text-center text-sm text-muted">
             {t("results.loading")}
           </p>
         </div>
@@ -98,7 +98,7 @@ export default function ResultsPage() {
       <div className="container-page py-24">
         <div className="card mx-auto max-w-xl p-10 text-center">
           <p className="text-3xl">◎</p>
-          <h1 className="mt-4 text-xl font-bold text-white">
+          <h1 className="mt-4 text-xl font-bold text-fg">
             {t("results.notfound")}
           </h1>
           <div className="mt-6 flex justify-center gap-3">
@@ -123,14 +123,14 @@ export default function ResultsPage() {
           <div>
             <Link
               href="/"
-              className="text-xs font-medium text-slate-400 transition hover:text-white"
+              className="text-xs font-medium text-muted transition hover:text-fg"
             >
               ← {t("results.home")}
             </Link>
-            <h1 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <h1 className="mt-2 text-2xl font-bold tracking-tight text-fg sm:text-3xl">
               {result.profile.company_name}
             </h1>
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-faint">
               IA-Day-0 · {t("results.grade")} {result.grade} ·{" "}
               {meta
                 ? new Date(meta.created_at).toLocaleDateString()
@@ -157,9 +157,9 @@ export default function ResultsPage() {
 
         <ReportView result={result} />
 
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-slate-500">
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-line/10 pt-6 text-xs text-faint">
           <span>IA-Day-0 Assessment Engine · By Cloud Automate</span>
-          <Link href="/" className="transition hover:text-white">
+          <Link href="/" className="transition hover:text-fg">
             {t("results.home")}
           </Link>
         </div>

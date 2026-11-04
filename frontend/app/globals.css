@@ -2,8 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ------------------------------------------------------------------ */
+/* Theme tokens                                                        */
+/* Dark is the default; `html.light` switches every neutral + accent.  */
+/* ------------------------------------------------------------------ */
 :root {
+  --canvas-rgb: 6 10 21;
+  --surface-rgb: 11 18 36;
+  --fg-rgb: 248 250 252;
+  --muted-rgb: 148 163 184;
+  --faint-rgb: 100 116 139;
+  --line-rgb: 255 255 255;
+  --accent-rgb: 34 211 238;
+  --accent2-rgb: 129 140 248;
+  --violet-rgb: 196 181 253;
+  --success-rgb: 110 231 183;
+  --warning-rgb: 253 230 138;
+  --danger-rgb: 254 202 202;
+
+  --card-bg: rgba(255, 255, 255, 0.035);
+  --card-bg-hover: rgba(255, 255, 255, 0.055);
+  --input-bg: rgba(255, 255, 255, 0.04);
+  --input-bg-focus: rgba(255, 255, 255, 0.06);
+  --recessed: rgba(0, 0, 0, 0.2);
+  --track: rgba(255, 255, 255, 0.1);
+  --grid-line: rgba(255, 255, 255, 0.04);
+  --glow-1: rgba(34, 211, 238, 0.16);
+  --glow-2: rgba(99, 102, 241, 0.16);
+
   color-scheme: dark;
+}
+
+html.light {
+  --canvas-rgb: 248 250 252;
+  --surface-rgb: 255 255 255;
+  --fg-rgb: 15 23 42;
+  --muted-rgb: 71 85 105;
+  --faint-rgb: 100 116 139;
+  --line-rgb: 15 23 42;
+  --accent-rgb: 14 116 144;
+  --accent2-rgb: 79 70 229;
+  --violet-rgb: 109 40 217;
+  --success-rgb: 4 120 87;
+  --warning-rgb: 180 83 9;
+  --danger-rgb: 190 18 60;
+
+  --card-bg: #ffffff;
+  --card-bg-hover: #ffffff;
+  --input-bg: #ffffff;
+  --input-bg-focus: #ffffff;
+  --recessed: rgba(15, 23, 42, 0.03);
+  --track: rgba(15, 23, 42, 0.1);
+  --grid-line: rgba(15, 23, 42, 0.05);
+  --glow-1: rgba(8, 145, 178, 0.1);
+  --glow-2: rgba(99, 102, 241, 0.1);
+
+  color-scheme: light;
 }
 
 html {
@@ -11,21 +65,21 @@ html {
 }
 
 body {
-  @apply bg-ink text-slate-200 antialiased;
+  @apply bg-canvas text-fg antialiased;
   background-image:
-    radial-gradient(ellipse 60% 40% at 15% -5%, rgba(34, 211, 238, 0.16), transparent 60%),
-    radial-gradient(ellipse 50% 40% at 90% 5%, rgba(99, 102, 241, 0.16), transparent 60%);
+    radial-gradient(ellipse 60% 40% at 15% -5%, var(--glow-1), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 5%, var(--glow-2), transparent 60%);
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
 
 ::selection {
-  background: rgba(34, 211, 238, 0.3);
+  background: rgb(var(--accent-rgb) / 0.3);
 }
 
 option {
-  background-color: #0b1224;
-  color: #e2e8f0;
+  background-color: rgb(var(--surface-rgb));
+  color: rgb(var(--fg-rgb));
 }
 
 @layer components {
@@ -34,19 +88,35 @@ option {
   }
 
   .card {
-    @apply rounded-2xl border border-white/10 bg-white/[0.035] backdrop-blur-sm;
+    @apply rounded-2xl border border-line/10 backdrop-blur-sm;
+    background-color: var(--card-bg);
+  }
+
+  html.light .card {
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.05),
+      0 12px 32px -20px rgba(15, 23, 42, 0.25);
   }
 
   .card-hover {
-    @apply transition duration-300 hover:border-white/20 hover:bg-white/[0.055];
+    @apply transition duration-300 hover:border-line/20;
+  }
+
+  .card-hover:hover {
+    background-color: var(--card-bg-hover);
   }
 
   .label {
-    @apply mb-2 block text-sm font-medium text-slate-300;
+    @apply mb-2 block text-sm font-medium text-fg/80;
   }
 
   .input {
-    @apply w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-slate-100 placeholder-slate-500 outline-none transition focus:border-accent/60 focus:bg-white/[0.06] focus:ring-2 focus:ring-accent/20;
+    @apply w-full rounded-xl border border-line/10 px-4 py-3 text-sm text-fg placeholder-faint outline-none transition focus:border-accent/60 focus:ring-2 focus:ring-accent/20;
+    background-color: var(--input-bg);
+  }
+
+  .input:focus {
+    background-color: var(--input-bg-focus);
   }
 
   .btn-primary {
@@ -54,15 +124,21 @@ option {
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.03] px-5 py-3 text-sm font-medium text-slate-200 transition hover:border-white/30 hover:bg-white/[0.07];
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-line/15 px-5 py-3 text-sm font-medium text-fg/80 transition hover:border-line/30 hover:text-fg;
+    background-color: rgb(var(--line-rgb) / 0.03);
+  }
+
+  .btn-ghost:hover {
+    background-color: rgb(var(--line-rgb) / 0.07);
   }
 
   .chip {
-    @apply inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-xs font-medium text-slate-300;
+    @apply inline-flex items-center gap-1.5 rounded-full border border-line/10 px-3 py-1 text-xs font-medium text-fg/80;
+    background-color: rgb(var(--line-rgb) / 0.05);
   }
 
   .section-title {
-    @apply text-2xl font-bold tracking-tight text-white sm:text-3xl;
+    @apply text-2xl font-bold tracking-tight text-fg sm:text-3xl;
   }
 
   .section-kicker {
@@ -70,7 +146,7 @@ option {
   }
 
   .prose-muted {
-    @apply text-sm leading-relaxed text-slate-400;
+    @apply text-sm leading-relaxed text-muted;
   }
 }
 
@@ -79,10 +155,14 @@ option {
     @apply bg-gradient-to-r from-cyan-300 via-sky-300 to-indigo-300 bg-clip-text text-transparent;
   }
 
+  html.light .text-gradient {
+    @apply from-cyan-700 via-sky-700 to-indigo-700;
+  }
+
   .grid-lines {
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
     background-size: 42px 42px;
   }
 }

@@ -38,10 +38,10 @@ export default function LoginForm({
               IA
             </span>
             <div>
-              <h1 className="text-lg font-bold text-white">
+              <h1 className="text-lg font-bold text-fg">
                 {t("admin.login.title")}
               </h1>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-muted">
                 {t("admin.login.subtitle")}
               </p>
             </div>
@@ -77,7 +77,7 @@ export default function LoginForm({
             </div>
 
             {error && (
-              <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">
+              <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-danger">
                 {error}
               </div>
             )}
@@ -94,7 +94,7 @@ export default function LoginForm({
           <div className="mt-6 text-center">
             <Link
               href="/"
-              className="text-xs text-slate-400 transition hover:text-white"
+              className="text-xs text-muted transition hover:text-fg"
             >
               ← {t("admin.back")}
             </Link>

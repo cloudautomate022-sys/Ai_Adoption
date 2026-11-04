@@ -28,7 +28,7 @@ export default function AdminPage() {
 
   if (!ready) {
     return (
-      <div className="container-page py-24 text-center text-sm text-slate-400">
+      <div className="container-page py-24 text-center text-sm text-muted">
         {t("admin.loading")}
       </div>
     );

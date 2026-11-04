@@ -92,8 +92,8 @@ function Scale({
             onClick={() => onChange(number)}
             className={`h-11 flex-1 rounded-xl border text-sm font-semibold transition ${
               value === number
-                ? "border-accent/70 bg-accent/15 text-white shadow-[0_0_20px_-6px_rgba(34,211,238,0.6)]"
-                : "border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/25 hover:text-white"
+                ? "border-accent/70 bg-accent/15 text-fg shadow-[0_0_20px_-6px_rgba(34,211,238,0.6)]"
+                : "border-line/10 bg-fg/[0.03] text-muted hover:border-line/25 hover:text-fg"
             }`}
             aria-pressed={value === number}
           >
@@ -101,7 +101,7 @@ function Scale({
           </button>
         ))}
       </div>
-      <div className="mt-2 flex justify-between text-[11px] text-slate-500">
+      <div className="mt-2 flex justify-between text-[11px] text-faint">
         <span>{low}</span>
         <span>{high}</span>
       </div>
@@ -280,18 +280,18 @@ export default function Wizard() {
         <div className="mb-8 text-center">
           <p className="section-kicker">{t("hero.kicker")}</p>
           <h2 className="section-title">{t("wizard.title")}</h2>
-          <p className="mt-2 text-sm text-slate-400">{t("wizard.subtitle")}</p>
+          <p className="mt-2 text-sm text-muted">{t("wizard.subtitle")}</p>
         </div>
 
         <div className="card overflow-hidden">
-          <div className="border-b border-white/10 px-6 pt-6 sm:px-8">
-            <div className="mb-4 flex items-center justify-between text-xs text-slate-400">
+          <div className="border-b border-line/10 px-6 pt-6 sm:px-8">
+            <div className="mb-4 flex items-center justify-between text-xs text-muted">
               <span>
                 {t("wizard.step")} {step} {t("wizard.of")} 5
               </span>
               <span className="hidden sm:block">{steps[step - 1]}</span>
             </div>
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-fg/10">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-indigo-500 transition-all duration-500"
                 style={{ width: `${(step / 5) * 100}%` }}
@@ -307,8 +307,8 @@ export default function Wizard() {
                     index + 1 === step
                       ? "font-semibold text-accent"
                       : index + 1 < step
-                        ? "text-slate-400 hover:text-white"
-                        : "text-slate-600"
+                        ? "text-muted hover:text-fg"
+                        : "text-faint/60"
                   }`}
                 >
                   {index + 1}. {label}
@@ -336,7 +336,7 @@ export default function Wizard() {
                       autoComplete="organization"
                     />
                     {errors.company_name && (
-                      <p className="mt-1.5 text-xs text-rose-400">
+                      <p className="mt-1.5 text-xs text-danger">
                         {errors.company_name}
                       </p>
                     )}
@@ -356,7 +356,7 @@ export default function Wizard() {
                       autoComplete="name"
                     />
                     {errors.contact_name && (
-                      <p className="mt-1.5 text-xs text-rose-400">
+                      <p className="mt-1.5 text-xs text-danger">
                         {errors.contact_name}
                       </p>
                     )}
@@ -375,7 +375,7 @@ export default function Wizard() {
                       autoComplete="email"
                     />
                     {errors.email && (
-                      <p className="mt-1.5 text-xs text-rose-400">{errors.email}</p>
+                      <p className="mt-1.5 text-xs text-danger">{errors.email}</p>
                     )}
                   </div>
                   <div>
@@ -409,7 +409,7 @@ export default function Wizard() {
                       ))}
                     </select>
                     {errors.sector && (
-                      <p className="mt-1.5 text-xs text-rose-400">{errors.sector}</p>
+                      <p className="mt-1.5 text-xs text-danger">{errors.sector}</p>
                     )}
                   </div>
                   <div>
@@ -430,7 +430,7 @@ export default function Wizard() {
                       ))}
                     </select>
                     {errors.employees && (
-                      <p className="mt-1.5 text-xs text-rose-400">
+                      <p className="mt-1.5 text-xs text-danger">
                         {errors.employees}
                       </p>
                     )}
@@ -443,7 +443,7 @@ export default function Wizard() {
               <div className="space-y-7 animate-fade-up">
                 <div>
                   <p className="label">{t("field.tools")}</p>
-                  <p className="mb-3 text-xs text-slate-500">{t("hint.tools")}</p>
+                  <p className="mb-3 text-xs text-faint">{t("hint.tools")}</p>
                   <div className="grid gap-2 sm:grid-cols-2">
                     {TOOLS.map((tool) => {
                       const active = form.tools.includes(tool);
@@ -454,16 +454,16 @@ export default function Wizard() {
                           onClick={() => toggleTool(tool)}
                           className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm transition ${
                             active
-                              ? "border-accent/60 bg-accent/10 text-white"
-                              : "border-white/10 bg-white/[0.02] text-slate-300 hover:border-white/25"
+                              ? "border-accent/60 bg-accent/10 text-fg"
+                              : "border-line/10 bg-fg/[0.02] text-fg/80 hover:border-line/25"
                           }`}
                           aria-pressed={active}
                         >
                           <span
                             className={`grid h-4 w-4 place-items-center rounded border text-[10px] ${
                               active
-                                ? "border-accent bg-accent text-ink"
-                                : "border-white/25"
+                                ? "text-canvas"
+                                : "border-line/25"
                             }`}
                           >
                             {active ? "✓" : ""}
@@ -483,7 +483,7 @@ export default function Wizard() {
                     low={t("scale.silos")}
                     high={t("scale.unified")}
                   />
-                  <p className="mt-2 text-xs text-slate-500">
+                  <p className="mt-2 text-xs text-faint">
                     {t("hint.centralization")}
                   </p>
                 </div>
@@ -496,7 +496,7 @@ export default function Wizard() {
                     low={t("scale.poor")}
                     high={t("scale.excellent")}
                   />
-                  <p className="mt-2 text-xs text-slate-500">{t("hint.quality")}</p>
+                  <p className="mt-2 text-xs text-faint">{t("hint.quality")}</p>
                 </div>
               </div>
             )}
@@ -506,11 +506,11 @@ export default function Wizard() {
                 <div>
                   <div className="flex items-baseline justify-between">
                     <p className="label">{t("field.pains")}</p>
-                    <span className="text-xs text-slate-500">
+                    <span className="text-xs text-faint">
                       {form.pain_points.length}/3
                     </span>
                   </div>
-                  <p className="mb-3 text-xs text-slate-500">{t("hint.pains")}</p>
+                  <p className="mb-3 text-xs text-faint">{t("hint.pains")}</p>
                   <div className="grid gap-2 sm:grid-cols-2">
                     {PAINS.map((pain) => {
                       const active = form.pain_points.includes(pain);
@@ -524,18 +524,18 @@ export default function Wizard() {
                           onClick={() => togglePain(pain)}
                           className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm transition ${
                             active
-                              ? "border-accent/60 bg-accent/10 text-white"
+                              ? "border-accent/60 bg-accent/10 text-fg"
                               : disabled
-                                ? "cursor-not-allowed border-white/5 bg-white/[0.01] text-slate-600"
-                                : "border-white/10 bg-white/[0.02] text-slate-300 hover:border-white/25"
+                                ? "cursor-not-allowed border-line/5 bg-fg/[0.01] text-faint/60"
+                                : "border-line/10 bg-fg/[0.02] text-fg/80 hover:border-line/25"
                           }`}
                           aria-pressed={active}
                         >
                           <span
                             className={`grid h-4 w-4 place-items-center rounded border text-[10px] ${
                               active
-                                ? "border-accent bg-accent text-ink"
-                                : "border-white/25"
+                                ? "text-canvas"
+                                : "border-line/25"
                             }`}
                           >
                             {active ? "✓" : ""}
@@ -546,7 +546,7 @@ export default function Wizard() {
                     })}
                   </div>
                   {errors.pain_points && (
-                    <p className="mt-2 text-xs text-rose-400">
+                    <p className="mt-2 text-xs text-danger">
                       {errors.pain_points}
                     </p>
                   )}
@@ -565,9 +565,9 @@ export default function Wizard() {
                     onChange={(event) =>
                       update("pain_severity", Number(event.target.value))
                     }
-                    className="h-2 w-full cursor-pointer appearance-none rounded-full bg-white/10 accent-cyan-400"
+                    className="h-2 w-full cursor-pointer appearance-none rounded-full bg-fg/10 accent-cyan-400"
                   />
-                  <div className="mt-1 flex justify-between text-[11px] text-slate-500">
+                  <div className="mt-1 flex justify-between text-[11px] text-faint">
                     <span>{t("scale.low")}</span>
                     <span>{t("scale.high")}</span>
                   </div>
@@ -671,7 +671,7 @@ export default function Wizard() {
                     low={t("scale.basic")}
                     high={t("scale.advanced")}
                   />
-                  <p className="mt-2 text-xs text-slate-500">
+                  <p className="mt-2 text-xs text-faint">
                     {t("hint.literacy")}
                   </p>
                 </div>
@@ -681,19 +681,19 @@ export default function Wizard() {
             {step === 5 && (
               <div className="animate-fade-up">
                 <div className="mb-5">
-                  <h3 className="text-lg font-semibold text-white">
+                  <h3 className="text-lg font-semibold text-fg">
                     {t("review.title")}
                   </h3>
-                  <p className="text-sm text-slate-400">{t("review.subtitle")}</p>
+                  <p className="text-sm text-muted">{t("review.subtitle")}</p>
                 </div>
                 <div className="grid gap-2 sm:grid-cols-2">
                   {summary.map((item) => (
                     <div
                       key={`${item.step}-${item.label}`}
-                      className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3"
+                      className="rounded-xl border border-line/10 bg-fg/[0.02] px-4 py-3"
                     >
                       <div className="flex items-center justify-between gap-2">
-                        <p className="text-[11px] uppercase tracking-wide text-slate-500">
+                        <p className="text-[11px] uppercase tracking-wide text-faint">
                           {item.label}
                         </p>
                         <button
@@ -704,17 +704,17 @@ export default function Wizard() {
                           {t("review.edit")}
                         </button>
                       </div>
-                      <p className="mt-1 break-words text-sm text-slate-200">
+                      <p className="mt-1 break-words text-sm text-fg">
                         {item.value || "—"}
                       </p>
                     </div>
                   ))}
                 </div>
-                <p className="mt-5 text-xs leading-relaxed text-slate-500">
+                <p className="mt-5 text-xs leading-relaxed text-faint">
                   {t("review.consent")}
                 </p>
                 {submitError && (
-                  <div className="mt-4 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">
+                  <div className="mt-4 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-danger">
                     {submitError}
                   </div>
                 )}
@@ -751,7 +751,7 @@ export default function Wizard() {
           </div>
         </div>
 
-        <p className="mt-4 text-center text-xs text-slate-500">{t("hero.note")}</p>
+        <p className="mt-4 text-center text-xs text-faint">{t("hero.note")}</p>
       </div>
     </section>
   );

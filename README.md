@@ -17,6 +17,8 @@ bajo riesgo y un plan de gestión del cambio. Disponible en **español, inglés 
 - **Motor de decisión determinista** basado en la matriz IA-Day-0: People, Systems, Hybrid o
   Foundation, con puntuaciones por dimensión y alerta de salud de datos.
 - **Informe trilingüe** generado en servidor y almacenado con la evaluación.
+- **Tema oscuro y tema claro** conmutables desde la cabecera (por defecto oscuro), con la
+  preferencia guardada en el navegador.
 - **PDF con gráficos** (barras por dimensión, fit People/Systems, roadmap y piloto).
 - **Panel de administración** con login, leads guardados, datos de contacto, respuestas,
   resultados, descarga de PDF por lead, exportación CSV y borrado.

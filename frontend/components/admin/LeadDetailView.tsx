@@ -121,7 +121,7 @@ export default function LeadDetailView({
 
   if (status === "loading") {
     return (
-      <div className="container-page py-24 text-center text-sm text-slate-400">
+      <div className="container-page py-24 text-center text-sm text-muted">
         {t("admin.loading")}
       </div>
     );
@@ -131,7 +131,7 @@ export default function LeadDetailView({
     return (
       <div className="container-page py-24">
         <div className="card mx-auto max-w-md p-8 text-center">
-          <p className="text-sm text-slate-300">{t("common.error")}</p>
+          <p className="text-sm text-fg/80">{t("common.error")}</p>
           <Link href="/admin" className="btn-ghost mt-4">
             {t("admin.backToDashboard")}
           </Link>
@@ -149,7 +149,7 @@ export default function LeadDetailView({
       <div className="mx-auto max-w-4xl">
         <Link
           href="/admin"
-          className="text-xs font-medium text-slate-400 transition hover:text-white"
+          className="text-xs font-medium text-muted transition hover:text-fg"
         >
           ← {t("admin.backToDashboard")}
         </Link>
@@ -157,10 +157,10 @@ export default function LeadDetailView({
         <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="section-kicker">{t("admin.detail")}</p>
-            <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <h1 className="text-2xl font-bold tracking-tight text-fg sm:text-3xl">
               {lead.company_name}
             </h1>
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-faint">
               #{lead.id} · {new Date(lead.created_at).toLocaleString()} ·{" "}
               {lead.language.toUpperCase()}
             </p>
@@ -178,7 +178,7 @@ export default function LeadDetailView({
               type="button"
               onClick={remove}
               disabled={busy}
-              className="btn-ghost border-rose-500/30 text-rose-300 hover:border-rose-500/60"
+              className="btn-ghost border-rose-500/30 text-danger hover:border-rose-500/60"
             >
               {t("admin.delete")}
             </button>
@@ -187,10 +187,10 @@ export default function LeadDetailView({
 
         <div className="card mt-6 grid gap-4 p-6 sm:grid-cols-2 lg:grid-cols-3">
           <div>
-            <p className="text-[11px] uppercase tracking-wide text-slate-500">
+            <p className="text-[11px] uppercase tracking-wide text-faint">
               {t("admin.contact")}
             </p>
-            <p className="mt-1 text-sm text-slate-200">{lead.contact_name}</p>
+            <p className="mt-1 text-sm text-fg">{lead.contact_name}</p>
             <a
               href={`mailto:${lead.email}`}
               className="block text-xs text-accent hover:underline"
@@ -200,29 +200,29 @@ export default function LeadDetailView({
             {lead.phone && (
               <a
                 href={`tel:${lead.phone.replace(/\s/g, "")}`}
-                className="block text-xs text-slate-400"
+                className="block text-xs text-muted"
               >
                 {lead.phone}
               </a>
             )}
           </div>
           <div>
-            <p className="text-[11px] uppercase tracking-wide text-slate-500">
+            <p className="text-[11px] uppercase tracking-wide text-faint">
               {t("admin.strategy")}
             </p>
-            <p className="mt-1 text-sm text-slate-200">{lead.strategy}</p>
-            <p className="text-xs text-slate-400">
+            <p className="mt-1 text-sm text-fg">{lead.strategy}</p>
+            <p className="text-xs text-muted">
               {t("admin.score")}: {lead.overall_score}/100
             </p>
           </div>
           <div>
-            <p className="text-[11px] uppercase tracking-wide text-slate-500">
+            <p className="text-[11px] uppercase tracking-wide text-faint">
               {t("field.sector")}
             </p>
-            <p className="mt-1 text-sm text-slate-200">
+            <p className="mt-1 text-sm text-fg">
               {t(`opt.sector.${lead.sector}`)}
             </p>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-muted">
               {t(`opt.employees.${lead.employees}`)}
             </p>
           </div>
@@ -230,29 +230,29 @@ export default function LeadDetailView({
 
         {lead.notes && (
           <div className="card mt-4 p-6">
-            <p className="text-[11px] uppercase tracking-wide text-slate-500">
+            <p className="text-[11px] uppercase tracking-wide text-faint">
               {t("admin.notes")}
             </p>
-            <p className="mt-2 whitespace-pre-wrap text-sm text-slate-300">
+            <p className="mt-2 whitespace-pre-wrap text-sm text-fg/80">
               {lead.notes}
             </p>
           </div>
         )}
 
         <div className="card mt-4 p-6">
-          <h2 className="text-sm font-semibold text-white">
+          <h2 className="text-sm font-semibold text-fg">
             {t("admin.answers")}
           </h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {answers.map(([key, value]) => (
               <div
                 key={key}
-                className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3"
+                className="rounded-xl border border-line/10 bg-fg/[0.02] px-4 py-3"
               >
-                <p className="text-[11px] uppercase tracking-wide text-slate-500">
+                <p className="text-[11px] uppercase tracking-wide text-faint">
                   {t(ANSWER_LABELS[key])}
                 </p>
-                <p className="mt-1 break-words text-sm text-slate-200">
+                <p className="mt-1 break-words text-sm text-fg">
                   {formatAnswer(key, value)}
                 </p>
               </div>

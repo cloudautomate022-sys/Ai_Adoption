@@ -25,17 +25,17 @@ const HEALTH_STYLES = {
   red: {
     box: "border-rose-500/30 bg-rose-500/[0.08]",
     dot: "bg-rose-400",
-    text: "text-rose-200",
+    text: "text-danger",
   },
   amber: {
     box: "border-amber-500/30 bg-amber-500/[0.08]",
     dot: "bg-amber-400",
-    text: "text-amber-200",
+    text: "text-warning",
   },
   green: {
     box: "border-emerald-500/30 bg-emerald-500/[0.08]",
     dot: "bg-emerald-400",
-    text: "text-emerald-200",
+    text: "text-success",
   },
 };
 
@@ -61,18 +61,18 @@ export default function ReportView({
     <div className="space-y-8">
       {/* Overall score */}
       <div className="card overflow-hidden">
-        <div className="border-b border-white/10 bg-gradient-to-r from-cyan-500/[0.08] to-indigo-500/[0.08] p-6 sm:p-8">
+        <div className="border-b border-line/10 bg-gradient-to-r from-cyan-500/[0.08] to-indigo-500/[0.08] p-6 sm:p-8">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">
                 {t("results.overall")}
               </p>
               <div className="mt-1 flex items-end gap-3">
-                <span className="text-6xl font-black leading-none text-white">
+                <span className="text-6xl font-black leading-none text-fg">
                   {scores.overall}
                 </span>
-                <span className="mb-1.5 text-lg text-slate-500">/100</span>
-                <span className="mb-1.5 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1 text-xs font-semibold text-slate-200">
+                <span className="mb-1.5 text-lg text-faint">/100</span>
+                <span className="mb-1.5 rounded-full border border-line/15 bg-fg/[0.06] px-3 py-1 text-xs font-semibold text-fg">
                   {t("results.grade")} {result.grade}
                 </span>
               </div>
@@ -83,7 +83,7 @@ export default function ReportView({
             </div>
           </div>
 
-          <p className="mt-5 max-w-3xl text-sm leading-relaxed text-slate-300">
+          <p className="mt-5 max-w-3xl text-sm leading-relaxed text-fg/80">
             {result.summary}
           </p>
 
@@ -99,7 +99,7 @@ export default function ReportView({
 
         <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_340px]">
           <div>
-            <h3 className="mb-4 text-sm font-semibold text-white">
+            <h3 className="mb-4 text-sm font-semibold text-fg">
               {t("results.scoresTitle")}
             </h3>
             <div className="space-y-4">
@@ -108,10 +108,10 @@ export default function ReportView({
                 return (
                   <div key={key}>
                     <div className="mb-1.5 flex items-center justify-between text-xs">
-                      <span className="text-slate-300">{t(`score.${key}`)}</span>
-                      <span className="font-semibold text-slate-400">{value}</span>
+                      <span className="text-fg/80">{t(`score.${key}`)}</span>
+                      <span className="font-semibold text-muted">{value}</span>
                     </div>
-                    <div className="h-2 overflow-hidden rounded-full bg-white/[0.07]">
+                    <div className="h-2 overflow-hidden rounded-full bg-fg/[0.07]">
                       <div
                         className={`h-full rounded-full bg-gradient-to-r ${barColor(
                           value,
@@ -142,7 +142,7 @@ export default function ReportView({
             {result.data_health.score}/100
           </span>
         </div>
-        <p className="mt-3 text-sm leading-relaxed text-slate-300">
+        <p className="mt-3 text-sm leading-relaxed text-fg/80">
           {result.data_health.message}
         </p>
         <p className={`mt-3 text-sm font-medium italic ${health.text}`}>
@@ -156,10 +156,10 @@ export default function ReportView({
         <div className="card mt-3 p-6">
           <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
             <div>
-              <p className="text-lg font-semibold text-white">
+              <p className="text-lg font-semibold text-fg">
                 {result.strategy_label}
               </p>
-              <p className="mt-2 text-sm leading-relaxed text-slate-400">
+              <p className="mt-2 text-sm leading-relaxed text-muted">
                 {result.strategy_desc}
               </p>
             </div>
@@ -169,11 +169,11 @@ export default function ReportView({
                 { label: t("results.fitSystems"), value: result.fit.systems, color: "from-indigo-400 to-violet-400" },
               ].map((item) => (
                 <div key={item.label}>
-                  <div className="mb-1 flex justify-between text-xs text-slate-400">
+                  <div className="mb-1 flex justify-between text-xs text-muted">
                     <span>{item.label}</span>
                     <span className="font-semibold">{item.value}</span>
                   </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-white/[0.07]">
+                  <div className="h-2 overflow-hidden rounded-full bg-fg/[0.07]">
                     <div
                       className={`h-full rounded-full bg-gradient-to-r ${item.color}`}
                       style={{ width: `${Math.max(2, item.value)}%` }}
@@ -197,8 +197,8 @@ export default function ReportView({
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-white">{tool.name}</p>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
+                  <p className="text-sm font-semibold text-fg">{tool.name}</p>
+                  <p className="mt-1.5 text-xs leading-relaxed text-muted">
                     {tool.why}
                   </p>
                 </div>
@@ -212,50 +212,50 @@ export default function ReportView({
       <section>
         <h2 className="section-title text-xl">{t("section.pilot")}</h2>
         <div className="card mt-3 overflow-hidden border-accent/20">
-          <div className="border-b border-white/10 bg-accent/[0.06] p-6">
+          <div className="border-b border-line/10 bg-accent/[0.06] p-6">
             <div className="flex flex-wrap items-center gap-2">
               <span className="chip border-accent/30 text-accent">
                 {result.pilot.duration}
               </span>
               <span className="chip">{result.pilot.risk}</span>
-              <span className="chip border-emerald-400/30 text-emerald-300">
+              <span className="chip border-emerald-400/30 text-success">
                 {t("results.internal")}
               </span>
             </div>
-            <h3 className="mt-4 text-lg font-semibold text-white">
+            <h3 className="mt-4 text-lg font-semibold text-fg">
               {result.pilot.title}
             </h3>
-            <p className="mt-2 text-sm leading-relaxed text-slate-300">
+            <p className="mt-2 text-sm leading-relaxed text-fg/80">
               {result.pilot.description}
             </p>
           </div>
           <div className="grid gap-4 p-6 sm:grid-cols-3">
             <div>
-              <p className="text-[11px] uppercase tracking-wide text-slate-500">
+              <p className="text-[11px] uppercase tracking-wide text-faint">
                 {t("results.pilotMetric")}
               </p>
-              <p className="mt-1 text-sm font-medium text-slate-200">
+              <p className="mt-1 text-sm font-medium text-fg">
                 {result.pilot.metric}
               </p>
             </div>
             <div>
-              <p className="text-[11px] uppercase tracking-wide text-slate-500">
+              <p className="text-[11px] uppercase tracking-wide text-faint">
                 {t("results.baseline")}
               </p>
-              <p className="mt-1 text-sm font-medium text-slate-200">
+              <p className="mt-1 text-sm font-medium text-fg">
                 {result.pilot.baseline}
               </p>
             </div>
             <div>
-              <p className="text-[11px] uppercase tracking-wide text-slate-500">
+              <p className="text-[11px] uppercase tracking-wide text-faint">
                 {t("results.target")}
               </p>
-              <p className="mt-1 text-sm font-medium text-emerald-300">
+              <p className="mt-1 text-sm font-medium text-success">
                 {result.pilot.target}
               </p>
             </div>
           </div>
-          <p className="border-t border-white/10 px-6 py-4 text-xs text-slate-500">
+          <p className="border-t border-line/10 px-6 py-4 text-xs text-faint">
             {result.pilot.note}
           </p>
         </div>
@@ -272,8 +272,8 @@ export default function ReportView({
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-white">{item.title}</p>
-                  <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                  <p className="text-sm font-semibold text-fg">{item.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-muted">
                     {item.description}
                   </p>
                 </div>
@@ -292,12 +292,12 @@ export default function ReportView({
               <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <h3 className="mt-2 text-sm font-semibold text-white">
+              <h3 className="mt-2 text-sm font-semibold text-fg">
                 {phase.title}
               </h3>
               <ul className="mt-3 space-y-2">
                 {phase.actions.map((action) => (
-                  <li key={action} className="flex gap-2 text-xs leading-relaxed text-slate-400">
+                  <li key={action} className="flex gap-2 text-xs leading-relaxed text-muted">
                     <span className="mt-0.5 text-accent">•</span>
                     <span>{action}</span>
                   </li>
@@ -311,27 +311,27 @@ export default function ReportView({
       {/* Quick wins and risks */}
       <section className="grid gap-4 md:grid-cols-2">
         <div className="card p-6">
-          <h2 className="text-base font-semibold text-white">
+          <h2 className="text-base font-semibold text-fg">
             {t("results.quick")}
           </h2>
           <ul className="mt-4 space-y-3">
             {result.quick_wins.map((win) => (
-              <li key={win} className="flex gap-2 text-sm text-slate-300">
-                <span className="text-emerald-400">✓</span>
+              <li key={win} className="flex gap-2 text-sm text-fg/80">
+                <span className="text-success">✓</span>
                 <span>{win}</span>
               </li>
             ))}
           </ul>
         </div>
         <div className="card p-6">
-          <h2 className="text-base font-semibold text-white">
+          <h2 className="text-base font-semibold text-fg">
             {t("results.risks")}
           </h2>
           <ul className="mt-4 space-y-3">
             {result.risks.map((risk) => (
               <li key={risk.title}>
-                <p className="text-sm font-medium text-amber-200">{risk.title}</p>
-                <p className="mt-0.5 text-xs leading-relaxed text-slate-400">
+                <p className="text-sm font-medium text-warning">{risk.title}</p>
+                <p className="mt-0.5 text-xs leading-relaxed text-muted">
                   {risk.description}
                 </p>
               </li>
@@ -341,15 +341,15 @@ export default function ReportView({
       </section>
 
       {/* CTA */}
-      <section className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-cyan-500/15 via-indigo-500/10 to-transparent p-6 sm:p-8">
+      <section className="relative overflow-hidden rounded-2xl border border-line/10 bg-gradient-to-br from-cyan-500/15 via-indigo-500/10 to-transparent p-6 sm:p-8">
         <div className="relative">
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">
             {t("results.cta")}
           </p>
-          <h2 className="mt-2 text-2xl font-bold text-white">
+          <h2 className="mt-2 text-2xl font-bold text-fg">
             {result.cta.title}
           </h2>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-300">
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-fg/80">
             {result.cta.body}
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
@@ -371,7 +371,7 @@ export default function ReportView({
               {t("footer.website")}
             </a>
           </div>
-          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-400">
+          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-1 text-xs text-muted">
             <span>Call: {CONTACT.phone}</span>
             <span>Email: {CONTACT.email}</span>
             <span className="break-all">{CONTACT.website}</span>

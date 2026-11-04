@@ -39,11 +39,11 @@ export default function HomePage() {
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
               {t("hero.kicker")}
             </span>
-            <h1 className="mt-6 text-4xl font-black leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="mt-6 text-4xl font-black leading-[1.05] tracking-tight text-fg sm:text-5xl lg:text-6xl">
               {t("hero.title1")}{" "}
               <span className="text-gradient">{t("hero.title2")}</span>
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-400">
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-muted">
               {t("hero.subtitle")}
             </p>
 
@@ -62,7 +62,7 @@ export default function HomePage() {
               <span className="chip">{t("hero.stat2")}</span>
               <span className="chip">{t("hero.stat3")}</span>
             </div>
-            <p className="mt-3 text-xs text-slate-500">{t("hero.note")}</p>
+            <p className="mt-3 text-xs text-faint">{t("hero.note")}</p>
           </div>
 
           <div className="relative animate-float">
@@ -70,14 +70,14 @@ export default function HomePage() {
             <div className="card grid-lines rounded-3xl p-6 shadow-2xl shadow-black/40">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-faint">
                     IA-Day-0 Index
                   </p>
-                  <p className="mt-1 text-5xl font-black text-white">
-                    72<span className="text-lg font-medium text-slate-500">/100</span>
+                  <p className="mt-1 text-5xl font-black text-fg">
+                    72<span className="text-lg font-medium text-faint">/100</span>
                   </p>
                 </div>
-                <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300">
+                <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-success">
                   Grade B
                 </span>
               </div>
@@ -85,11 +85,11 @@ export default function HomePage() {
               <div className="mt-5 space-y-3">
                 {PREVIEW.map((item) => (
                   <div key={item.label}>
-                    <div className="mb-1 flex justify-between text-[11px] text-slate-400">
+                    <div className="mb-1 flex justify-between text-[11px] text-muted">
                       <span>{item.label}</span>
                       <span>{item.value}</span>
                     </div>
-                    <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+                    <div className="h-1.5 overflow-hidden rounded-full bg-fg/10">
                       <div
                         className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-indigo-400"
                         style={{ width: `${item.value}%` }}
@@ -99,14 +99,14 @@ export default function HomePage() {
                 ))}
               </div>
 
-              <div className="mt-6 rounded-2xl border border-white/10 bg-black/20 p-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-300">
+              <div className="mt-6 rounded-2xl border border-line/10 bg-recessed p-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent">
                   Strategy
                 </p>
-                <p className="mt-1 text-sm font-semibold text-white">
+                <p className="mt-1 text-sm font-semibold text-fg">
                   Hybrid · People first, Systems next
                 </p>
-                <p className="mt-2 text-xs leading-relaxed text-slate-400">
+                <p className="mt-2 text-xs leading-relaxed text-muted">
                   Internal productivity pilot in 4 weeks. No customer-facing exposure.
                 </p>
               </div>
@@ -124,13 +124,13 @@ export default function HomePage() {
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map((feature) => (
             <div key={feature.title} className="card card-hover p-5">
-              <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-lg text-accent">
+              <span className="grid h-10 w-10 place-items-center rounded-xl border border-line/10 bg-fg/[0.04] text-lg text-accent">
                 {feature.icon}
               </span>
-              <h3 className="mt-4 text-sm font-semibold text-white">
+              <h3 className="mt-4 text-sm font-semibold text-fg">
                 {t(feature.title)}
               </h3>
-              <p className="mt-2 text-xs leading-relaxed text-slate-400">
+              <p className="mt-2 text-xs leading-relaxed text-muted">
                 {t(feature.desc)}
               </p>
             </div>
@@ -145,14 +145,14 @@ export default function HomePage() {
             <h2 className="section-title">{t("method.title")}</h2>
             <p className="mt-3 prose-muted">{t("method.subtitle")}</p>
 
-            <div className="mt-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.05] to-transparent p-5">
-              <h3 className="text-base font-semibold text-white">
+            <div className="mt-6 rounded-2xl border border-line/10 bg-gradient-to-br from-fg/[0.05] to-transparent p-5">
+              <h3 className="text-base font-semibold text-fg">
                 {t("why.title")}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-400">
+              <p className="mt-2 text-sm leading-relaxed text-muted">
                 {t("why.body")}
               </p>
-              <ul className="mt-4 space-y-2 text-sm text-slate-300">
+              <ul className="mt-4 space-y-2 text-sm text-fg/80">
                 {["why.p1", "why.p2", "why.p3"].map((key) => (
                   <li key={key} className="flex gap-2">
                     <span className="mt-0.5 text-accent">✓</span>
@@ -168,14 +168,14 @@ export default function HomePage() {
             <div className="space-y-4">
               {METHOD.map((item) => (
                 <div key={item.step} className="relative flex gap-4 pl-0">
-                  <span className="relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/15 bg-surface text-xs font-bold text-accent">
+                  <span className="relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line/15 bg-surface text-xs font-bold text-accent">
                     {item.step}
                   </span>
                   <div className="card card-hover flex-1 p-5">
-                    <h3 className="text-sm font-semibold text-white">
+                    <h3 className="text-sm font-semibold text-fg">
                       {t(item.title)}
                     </h3>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                    <p className="mt-1 text-xs leading-relaxed text-muted">
                       {t(item.desc)}
                     </p>
                   </div>
