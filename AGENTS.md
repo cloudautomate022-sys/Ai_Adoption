@@ -28,6 +28,8 @@ These rules outlive `MEMORY.md`. Read both at the start of any task.
 - Keep the engine deterministic; any LLM enrichment must be optional and behind a flag.
 - Never commit `.env`, `backend/data/`, tokens, database files or real personal data.
 - Store only what the assessment needs. Do not log PII.
+- Backend URL must stay runtime-configurable (`API_URL` injected by `app/layout.tsx`); never
+  hardcode `localhost:8000` in components. Keep `render.yaml` and `.env.example` in sync.
 - PDF must be generated with ReportLab only (no GTK/WeasyPrint system dependencies).
 - Run `python -m pytest -q` in `backend/` and `npm run build` in `frontend/` before finishing.
 

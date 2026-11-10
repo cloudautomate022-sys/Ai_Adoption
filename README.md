@@ -56,6 +56,7 @@ AIA4/
 │   ├── components/          # wizard, informe, radar, admin
 │   ├── lib/                 # API client, i18n, tipos
 │   └── .env.local.example
+├── render.yaml              # Blueprint Render (backend + frontend + Postgres)
 ├── AGENTS.md
 └── MEMORY.md
 ```
@@ -107,19 +108,25 @@ Abrir <http://localhost:3000>.
 
 | Variable | Por defecto | Descripción |
 | --- | --- | --- |
+| `ENVIRONMENT` | `development` | Etiqueta del entorno (`production` en Render). |
+| `HOST` / `PORT` | `0.0.0.0` / `8000` | Bind de `python -m app`; Render inyecta `PORT`. |
+| `PUBLIC_API_URL` | `http://localhost:8000` | URL pública del backend. Si no se define, usa `RENDER_EXTERNAL_URL`. |
+| `ROOT_PATH` | vacío | Prefijo opcional si el backend vive tras un proxy (ej. `/ia-day-0`). |
 | `SECRET_KEY` | valor de desarrollo | Firma de tokens admin. Obligatorio en producción. |
 | `ADMIN_USERNAME` | `admin` | Usuario administrador inicial. |
 | `ADMIN_PASSWORD` | `CloudAutomate2026!` | Contraseña inicial. |
 | `TOKEN_TTL_HOURS` | `12` | Duración del token admin. |
 | `DATABASE_URL` | `sqlite:///./data/ia_day0.db` | Cambiar a Postgres en producción. |
-| `CORS_ORIGINS` | `http://localhost:3000,...` | Orígenes permitidos, separados por coma. |
-| `FRONTEND_URL` | `http://localhost:3000` | URL pública del frontend. |
+| `CORS_ORIGINS` | `http://localhost:3000,...` | Orígenes permitidos, separados por coma. Sin esquema se asume HTTPS. |
+| `FRONTEND_URL` | `http://localhost:3000` | URL pública del frontend; se añade a CORS automáticamente. |
+| `CORS_ORIGIN_REGEX` | vacío | Regex opcional para previews de Vercel/Render. |
 
 ### Frontend (`frontend/.env.local`)
 
 | Variable | Por defecto | Descripción |
 | --- | --- | --- |
-| `NEXT_PUBLIC_API_URL` | `http://localhost:8000` | URL del backend (sin barra final). |
+| `API_URL` | `http://localhost:8000` | **Recomendada.** El servidor Next.js la lee en runtime; cambiarla y reiniciar basta, sin rebuild. |
+| `NEXT_PUBLIC_API_URL` | `http://localhost:8000` | Fallback de build para hosting estático; queda embebida en el bundle. |
 
 ## API principal
 
@@ -128,6 +135,7 @@ Abrir <http://localhost:3000>.
 | `POST` | `/api/assessments` | — | Crea evaluación, devuelve `public_id` + informe. |
 | `GET` | `/api/assessments/{public_id}?lang=es` | — | Informe público (regenerable en ES/EN/IT). |
 | `GET` | `/api/assessments/{public_id}/pdf?lang=it` | — | PDF del informe. |
+| `GET` | `/api/config` | — | Descubrimiento público: URL activa del backend, CORS e idiomas. |
 | `POST` | `/api/admin/login` | — | Devuelve bearer token. |
 | `GET` | `/api/admin/stats` | Bearer | Métricas del panel. |
 | `GET` | `/api/admin/leads` | Bearer | Lista paginada con búsqueda y filtros. |
@@ -175,11 +183,92 @@ cd backend
 Cubren el motor (estrategias, privacidad, idiomas), la generación de PDF en los tres
 idiomas y el hashing/tokens de autenticación.
 
+## Despliegue: backend en otra ubicación (Render, Fly, VPS…)
+
+El frontend **no tiene la URL del backend hardcodeada**. La resolución ocurre en dos
+niveles:
+
+1. `app/layout.tsx` lee `API_URL` en el servidor de Next.js y la inyecta como
+   `window.__IA_DAY0_CONFIG__.apiUrl` en cada página.
+2. `lib/api.ts` usa ese valor en runtime; si no existe, cae a `NEXT_PUBLIC_API_URL` y,
+   por último, a `http://localhost:8000`.
+
+Esto permite mover el backend a `https://ia-day-0-api.onrender.com` (o cualquier otro
+dominio) cambiando solo variables de entorno y reiniciando el servicio, **sin rebuild**.
+
+### Configurar la URL desde la interfaz (sin variables de entorno)
+
+La web incluye un panel gráfico de conexión:
+
+1. Abre la aplicación y pulsa el botón **API** de la cabecera (icono de servidor).
+2. Escribe la URL del backend, por ejemplo
+   `https://ai-adoption-l6on.onrender.com`.
+3. Pulsa **Probar conexión** para validar `/api/health`.
+4. Pulsa **Guardar y recargar**.
+
+La URL se guarda en `localStorage` del navegador (`ia_day0_api_url`) y tiene prioridad
+sobre `API_URL`/`NEXT_PUBLIC_API_URL`. No se guardan claves ni secretos. Para volver a la
+configuración del despliegue, usa **Restaurar automática**.
+
+> Es una preferencia por navegador: cada visitante puede apuntar a un backend distinto.
+> Para cambiar la URL de todos los usuarios, define `API_URL` en el hosting del frontend.
+
+**CORS:** el backend permite por defecto los dominios de Render, Vercel y Netlify
+(`*.onrender.com`, `*.vercel.app`, `*.netlify.app`) además de `localhost`. Si usas un
+dominio propio, añade `CORS_ORIGINS=https://tu-dominio.com` o define
+`CORS_ORIGIN_REGEX` en el backend.
+
+### Opción A — Blueprint completo en Render
+
+El repositorio incluye [`render.yaml`](./render.yaml) con:
+
+- Backend FastAPI (`ia-day-0-api`) + Postgres gestionado.
+- Frontend Next.js (`ia-day-0-web`) con `API_URL` enlazada automáticamente al backend.
+- `CORS_ORIGINS` y `FRONTEND_URL` enlazadas al frontend.
+
+Pasos: **Render → New → Blueprint → seleccionar el repositorio**. Render pedirá
+`ADMIN_PASSWORD`; `SECRET_KEY` se genera solo. Tras el primer deploy, comprueba:
+
+```text
+https://<backend>.onrender.com/api/health
+https://<backend>.onrender.com/api/config
+```
+
+### Opción B — Backend en Render y frontend en otro proveedor
+
+En Render crea un **Web Service** con:
+
+- Root Directory: `backend`
+- Build: `pip install -r requirements.txt`
+- Start: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+- Health check: `/api/health`
+- Variables: `SECRET_KEY`, `ADMIN_PASSWORD`, `DATABASE_URL`, `ENVIRONMENT=production`,
+  `FRONTEND_URL=https://tu-frontend.com` y `CORS_ORIGINS=https://tu-frontend.com`.
+
+En el proveedor del frontend configura:
+
+```bash
+API_URL=https://ia-day-0-api.onrender.com
+# Opcional si el host solo permite variables de build:
+NEXT_PUBLIC_API_URL=https://ia-day-0-api.onrender.com
+```
+
+Notas:
+
+- Sin barra final en las URLs.
+- Si el proveedor entrega solo el host (`miapi.onrender.com`), el backend y el frontend
+  añaden `https://` automáticamente (localhost se queda en `http://`).
+- Para dominios personalizados actualiza `API_URL`, `FRONTEND_URL` y `CORS_ORIGINS`.
+- Con el plan gratuito de Render el disco es efímero: usa el Postgres del blueprint para
+  no perder leads. SQLite sigue siendo válido en local o con un disco persistente.
+- También puedes arrancar el backend con `python -m app`: respeta `HOST` y `PORT`.
+
 ## Checklist de producción
 
 - [ ] `SECRET_KEY` largo y aleatorio; `ADMIN_PASSWORD` propio.
 - [ ] `DATABASE_URL` apuntando a Postgres y backups programados.
 - [ ] `CORS_ORIGINS` y `FRONTEND_URL` con el dominio real (HTTPS).
+- [ ] `API_URL` del frontend apuntando al backend desplegado (sin barra final).
 - [ ] Reverse proxy (Nginx/Caddy) para API y frontend.
 - [ ] Rate limiting en login y en `POST /api/assessments`.
 - [ ] Política de retención/borrado de datos personales (GDPR).
